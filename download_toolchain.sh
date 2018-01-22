@@ -6,11 +6,11 @@ wget -c --trust-server-names -P ../archives https://sourceforge.net/projects/uru
 cd ../archives
 
 RETOK=`md5sum -c ./host-linux32-i686-linux.tar.gz.md5`
-RETOK=`printf "$RETOK" | grep -rwi - -e "ok" | wc -l`
+RETOK=`printf "$RETOK" | grep -ri - -e "md5sum:" | wc -l`
 
 cd ../system
 
-if [ $RETOK != 0 ] ; then
+if [ $RETOK = 0 ] ; then
     printf "MD5 ok!\n"
     sleep 2
     tar -xvzf ../archives/host-linux32-i686-linux.tar.gz
@@ -21,5 +21,5 @@ else
     printf "MD5 doesn't match.\n"
     printf "removing temp dir and stoping intallation!\n\n\n\n"
     sleep 2
-    exit 1
+    exit 127
 fi
